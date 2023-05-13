@@ -1,0 +1,91 @@
+import java.util.Scanner;
+
+public class Project {
+
+	public static void main(String [] args) {
+		 
+		//scanner
+		Scanner Input = new Scanner (System.in);
+		
+		
+		//user's input
+        System.out.print("Enter square feet: ");
+		int square_foot = Input.nextInt();;
+		System.out.println("Enter # of bedrooms: ");
+		int bedrooms = Input.nextInt();;
+		System.out.println("Enter # of bathrooms: ");
+		int bathrooms = Input.nextInt();;
+		System.out.println("Enter listing price: ");
+		int listing_price = Input.nextInt();
+		System.out.println("Enter # of amenities: ");
+		int total_amentities = Input.nextInt();
+		
+		 
+		//variable declarations
+		int estimated_price;
+		double ratio = 0;
+		int score = listing_price/square_foot; //estimated market value 
+		double rating = 0;
+
+		
+		//initial rating setting (based on $ per square foot)
+		if (score >= 1400) {
+			rating = 32;
+		} else if ((score >= 1300) && (score <= 1400)) {
+			rating = 35;
+		} else if ((score >= 1200) && (score <= 1300)) {
+			rating = 38;
+		} else if ((score >= 1100) && (score <= 1200)) {
+			rating = 41;
+		} else if ((score >= 1000) && (score <= 1100)) {
+			rating = 44;
+		} else if ((score >= 900) && (score <= 1000)) {
+			rating = 47;
+		} else if ((score >= 800) && (score <= 900)) {
+			rating = 50;
+		} else if ((score >= 700) && (score <= 800)) {
+			rating = 53;
+		} else if ((score >= 600) && (score <= 700)) {
+			rating = 56;
+		} else if ((score >= 500) && (score <= 600)) {
+			rating = 59;
+		} else if ((score >= 400) && (score <= 500)) {
+			rating = 62;
+		} else if ((score >= 300) && (score <= 400)) {
+			rating = 65; 
+		} else if ((score >= 200) && (score <= 300)) {
+			rating = 68;
+		} else if (score <= 200) {
+			rating = 71;
+		}
+		
+		//getting estimated price
+        estimated_price = 900 * square_foot;
+
+        
+        //rating modifier based on # of rooms in house
+        if (bathrooms + bedrooms > 4) {
+            estimated_price = estimated_price + estimated_price * (bathrooms + bedrooms)/20;
+        } else if (bathrooms + bedrooms < 4) {
+            estimated_price = estimated_price - estimated_price * (bathrooms + bedrooms)/20;
+        } else {}
+
+        ratio = estimated_price / listing_price;
+		
+        
+        //Ratio affects the rating, capped at 100
+        ratio = Math.cbrt(ratio);
+        rating = rating * ratio;
+		
+		
+		//Amenities add value
+		rating = rating + 1*total_amentities;
+		
+		
+		System.out.print("Your rating is: " + rating);
+    System.out.println("\n"+ratio);
+    System.out.println(estimated_price);
+
+		Input.close();
+	}
+}
